@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.layout {
+  height: 100vh;
+}
+
+.logo {
+  color: white;
+  float: right;
+  font-weight: bold;
+  font-size: 1rem;
+}
