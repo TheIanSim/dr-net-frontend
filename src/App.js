@@ -24,7 +24,7 @@ function App() {
     if (data.title === "PROCESSING") {
       icon = <Icon type="sync" spin style={{ color: "orange" }} />;
     }
-    if (data.title === "PROCESSING COMPLETED") {
+    if (data.title === "PROCESSING COMPLETED" || data.title === "INVOICE UPDATED") {
       icon = (
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
       );
@@ -39,8 +39,8 @@ function App() {
   };
 
   useEffect(() => {
-    socket.emit("req-home");
     socket.on("status_update", data => notificationHandler(data));
+    socket.emit("req-home");
   }, []);
 
   return (

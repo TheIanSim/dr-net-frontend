@@ -40,7 +40,6 @@ class Invoices extends React.Component {
   };
 
   handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter
@@ -72,11 +71,11 @@ class Invoices extends React.Component {
     return "green";
   };
 
-  showModal = data => {
-    console.log(data);
+  showModal = (data, text) => {
     this.setState({
       visible: true,
-      selected: data
+      selected: data,
+      filename: text
     });
   };
 
@@ -95,7 +94,6 @@ class Invoices extends React.Component {
 
   processData = data => {
     for (let row of data) {
-      console.log(row);
       let num = 0;
       let den = 0;
       for (let key in row) {
@@ -112,7 +110,6 @@ class Invoices extends React.Component {
   updateData = incomingData => {
     incomingData = JSON.parse(incomingData);
     const processedData = this.processData(incomingData);
-    console.log(processedData);
     this.setState({
       ...this.state,
       data: processedData.reverse()
@@ -120,8 +117,8 @@ class Invoices extends React.Component {
   };
 
   componentDidMount() {
-    this.props.socket.emit("req_invoices");
     this.props.socket.on("invoices_update", this.updateData);
+    this.props.socket.emit("req_invoices");
   }
 
   render() {
@@ -138,7 +135,7 @@ class Invoices extends React.Component {
         sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
         ellipsis: true,
         render: (text, data) => (
-          <a onClick={() => this.showModal(data)}>{text}</a>
+          <a onClick={() => this.showModal(data, text)}>{text}</a>
         )
       },
       {
@@ -250,7 +247,13 @@ class Invoices extends React.Component {
           onCancel={this.handleCancel}
           width="80%"
         >
-          <ModalContent data={this.state.selected} />
+          {this.state.visible && (
+            <ModalContent
+              socket={this.props.socket}
+              data={this.state.selected}
+              filename={this.state.filename}
+            />
+          )}
         </Modal>
         <div>
           <div className="table-operations">
