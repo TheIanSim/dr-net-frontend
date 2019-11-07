@@ -147,7 +147,6 @@ class EditableTable extends React.Component {
     const { filename, socket } = this.props;
     const { dataSource } = this.state;
     const payload = { filename, data: dataSource };
-    console.log(payload)
     socket.emit("req_invoice_details_update", payload);
   };
 

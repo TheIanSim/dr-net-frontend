@@ -15,7 +15,7 @@ export default function Accuracy(props) {
             color: "#02afbc"
           }}
         >
-          {props.invoicesData.length}
+          {props.invoicesData.filter(invoice => invoice.status !== 'unprocessed').length}
         </h1>
         <h4>Total Documents Processed</h4>
       </div>

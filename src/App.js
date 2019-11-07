@@ -25,7 +25,6 @@ class App extends React.Component {
   };
 
   notificationHandler = data => {
-    console.log(data);
     let icon;
     if (data.title === "PROCESSING") {
       icon = <Icon type="sync" spin style={{ color: "orange" }} />;
