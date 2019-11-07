@@ -1,29 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import RadarChart from "../../Charts/RadarChart";
 import { percRound } from "../../functions";
 
 export default function Accuracy(props) {
-  const { socket } = props;
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    socket.emit("req_metrics");
-    socket.on("accuracy_metrics", data =>
-      setData(JSON.parse(data)["Neural Network"])
-    );
-  }, []);
-
   const formatData = data => {
-    const out = [];
-    for (let key of Object.keys(data)) {
-      if (!new Set(["macro avg", "accuracy", "weighted avg"]).has(key)) {
-        out.push({
-          category: key,
-          F1: percRound(data[key]["f1-score"])
-        });
+    data = data;
+    if (data) {
+      const out = [];
+      for (let key of Object.keys(data)) {
+        if (!new Set(["macro avg", "accuracy", "weighted avg"]).has(key)) {
+          out.push({
+            category: key,
+            F1: percRound(data[key]["f1-score"])
+          });
+        }
       }
+      return out;
     }
-    return out;
   };
 
   return (
@@ -42,12 +35,15 @@ export default function Accuracy(props) {
             color: "#5366ac"
           }}
         >
-          {percRound(data.accuracy)}%
+          {props.data
+            ? percRound(props.data.accuracy)
+            : 0}
+          %
         </h1>
         <h4>Overall Classifier Accuracy</h4>
       </div>
       <div className="chart-container">
-        <RadarChart data={formatData(data)} />
+        <RadarChart data={formatData(props.data)} />
       </div>
     </div>
   );

@@ -6,15 +6,7 @@ import ValueLabel from "./ValueLabel";
 import { percRound } from "../../functions";
 
 export default function Accuracy(props) {
-  const { socket } = props;
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    socket.emit("req_metrics");
-    socket.on("accuracy_metrics", data =>
-      setData(JSON.parse(data)["Neural Network"])
-    );
-  }, []);
+  const { accuracyData: data } = props;
 
   return (
     <div

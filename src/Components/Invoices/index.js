@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Tag, Divider, Modal } from "antd";
+import { Table, Button, Tag, Modal } from "antd";
 import ModalContent from "./ModalContent";
 
 const statusColours = {
@@ -58,10 +58,6 @@ class Invoices extends React.Component {
   };
 
   formatAccCol = percent => {
-    // const r =
-    //   percent < 50 ? 255 : Math.floor(255 - ((percent * 2 - 100) * 255) / 100);
-    // const g = percent > 50 ? 255 : Math.floor((percent * 2 * 255) / 100);
-    // return "rgb(" + r + "," + g + ",0)";
     if (percent < 30) {
       return "red";
     }
@@ -106,20 +102,6 @@ class Invoices extends React.Component {
     }
     return data;
   };
-
-  updateData = incomingData => {
-    incomingData = JSON.parse(incomingData);
-    const processedData = this.processData(incomingData);
-    this.setState({
-      ...this.state,
-      data: processedData.reverse()
-    });
-  };
-
-  componentDidMount() {
-    this.props.socket.on("invoices_update", this.updateData);
-    this.props.socket.emit("req_invoices");
-  }
 
   render() {
     let { sortedInfo, filteredInfo } = this.state;
@@ -225,18 +207,6 @@ class Invoices extends React.Component {
           </Tag>
         )
       }
-      // {
-      //   title: "Actions",
-      //   dataIndex: "actions",
-      //   key: "actions",
-      //   render: (text, record) => (
-      //     <span>
-      //       <a>Open File</a>
-      //       <Divider type="vertical" />
-      //       <a>Run Classifier</a>
-      //     </span>
-      //   )
-      // }
     ];
     return (
       <div className="card">
@@ -262,7 +232,7 @@ class Invoices extends React.Component {
           </div>
           <Table
             columns={columns}
-            dataSource={this.state.data}
+            dataSource={this.processData(this.props.invoicesData)}
             onChange={this.handleChange}
           />
         </div>

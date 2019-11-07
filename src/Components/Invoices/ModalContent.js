@@ -147,6 +147,7 @@ class EditableTable extends React.Component {
     const { filename, socket } = this.props;
     const { dataSource } = this.state;
     const payload = { filename, data: dataSource };
+    console.log(payload)
     socket.emit("req_invoice_details_update", payload);
   };
 
@@ -175,6 +176,7 @@ class EditableTable extends React.Component {
     });
     return (
       <div>
+        <h2>{this.props.filename}</h2>
         <Table
           components={components}
           rowClassName={() => "editable-row"}
@@ -188,7 +190,7 @@ class EditableTable extends React.Component {
           style={{ marginTop: "12px", right: "0px" }}
           onClick={this.handleSubmit}
         >
-          Save All
+          {"Validate & Save All"}
         </Button>
       </div>
     );

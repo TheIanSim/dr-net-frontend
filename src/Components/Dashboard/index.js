@@ -13,8 +13,11 @@ export default function Dashboard(props) {
           justifyContent: "space-between"
         }}
       >
-        <Accuracy handlePageChange={props.handlePageChange} socket={props.socket} />
-        <Volume />
+        <Accuracy
+          handlePageChange={props.handlePageChange}
+          data={props.accuracyData}
+        />
+        <Volume invoicesData={props.invoicesData} />
         <Trends />
       </div>
       <Upload />

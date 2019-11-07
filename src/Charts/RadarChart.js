@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 export default function RadarChartComp(props) {
-  console.log(props.data)
   return (
     <ResponsiveContainer>
       <RadarChart outerRadius={100} data={props.data}>

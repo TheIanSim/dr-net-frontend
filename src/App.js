@@ -1,35 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Menu, notification, Icon } from "antd";
-
 import Dashboard from "./Components/Dashboard";
 import Accuracy from "./Components/Accuracy";
 import Invoices from "./Components/Invoices";
 
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 
 import "./App.css";
 
-function App() {
-  const { Header, Content, Footer } = Layout;
-  const [page, setPage] = useState("HOME");
-  const socket = socketIOClient("http://localhost:5000");
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const handlePageChange = e => {
-    setPage(e.key);
+    this.state = {
+      page: "HOME",
+      accuracy: {},
+      invoices: [],
+      socket: null
+    };
+  }
+
+  handlePageChange = e => {
+    this.setState({ page: e.key });
   };
 
-  const notificationHandler = data => {
-    data = JSON.parse(data);
+  notificationHandler = data => {
+    console.log(data);
     let icon;
     if (data.title === "PROCESSING") {
       icon = <Icon type="sync" spin style={{ color: "orange" }} />;
     }
-    if (data.title === "PROCESSING COMPLETED" || data.title === "INVOICE UPDATED") {
+    if (
+      data.title === "PROCESSING COMPLETED" ||
+      data.title === "INVOICE UPDATED"
+    ) {
       icon = (
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
       );
     }
-
     notification.open({
       message: data.title,
       description: data.content,
@@ -38,57 +46,84 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    socket.on("status_update", data => notificationHandler(data));
-    socket.emit("req-home");
-  }, []);
+  componentDidMount() {
+    const socket = io("http://localhost:5000");
 
-  return (
-    <div className="App">
-      <Layout className="layout">
-        <Header>
-          <div className="logo">Dr-NET Document Classifier</div>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["HOME"]}
-            style={{ lineHeight: "64px" }}
+    socket.on("invoices_update", data =>
+      this.setState({ invoices: JSON.parse(data) })
+    );
+    socket.on("status_update", data =>
+      this.notificationHandler(JSON.parse(data))
+    );
+    socket.on("accuracy_metrics", data => {
+      this.setState({ accuracy: JSON.parse(data) });
+    });
+
+    socket.emit("req_invoices");
+    socket.emit("req_metrics");
+
+    this.setState({ socket });
+  }
+
+  render() {
+    const { Header, Content, Footer } = Layout;
+    return (
+      <div className="App">
+        <Layout className="layout">
+          <Header>
+            <div className="logo">Dr-NET Document Classifier</div>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["HOME"]}
+              style={{ lineHeight: "64px" }}
+            >
+              <Menu.Item onClick={this.handlePageChange} key="HOME">
+                Home
+              </Menu.Item>
+              <Menu.Item onClick={this.handlePageChange} key="ACCURACY">
+                Accuracy
+              </Menu.Item>
+              <Menu.Item onClick={this.handlePageChange} key="INVOICES">
+                Invoices
+              </Menu.Item>
+              <Menu.Item onClick={this.handlePageChange} key="TRENDS">
+                Trends
+              </Menu.Item>
+            </Menu>
+          </Header>
+          <Content style={{ padding: "30px", background: "#eaeaea" }}>
+            {this.state.page === "HOME" && (
+              <Dashboard
+                handlePageChange={this.handlePageChange}
+                socket={this.state.socket}
+                invoicesData={this.state.invoices}
+                accuracyData={this.state.accuracy}
+              />
+            )}
+            {this.state.page === "ACCURACY" && (
+              <Accuracy
+                socket={this.state.socket}
+                accuracyData={this.state.accuracy}
+              />
+            )}
+            {this.state.page === "INVOICES" && (
+              <Invoices
+                socket={this.state.socket}
+                invoicesData={this.state.invoices}
+              />
+            )}
+          </Content>
+          <Footer
+            style={{ textAlign: "center", background: "#eaeaea" }}
+            onClick={this.st}
           >
-            <Menu.Item onClick={handlePageChange} key="HOME">
-              Home
-            </Menu.Item>
-            <Menu.Item onClick={handlePageChange} key="ACCURACY">
-              Accuracy
-            </Menu.Item>
-            <Menu.Item onClick={handlePageChange} key="INVOICES">
-              Invoices
-            </Menu.Item>
-            <Menu.Item onClick={handlePageChange} key="TRENDS">
-              Trends
-            </Menu.Item>
-          </Menu>
-        </Header>
-        <Content style={{ padding: "30px", background: "#eaeaea" }}>
-          {page === "HOME" && (
-            <Dashboard handlePageChange={handlePageChange} socket={socket} />
-          )}
-          {page === "ACCURACY" && <Accuracy socket={socket} />}
-          {page === "INVOICES" && <Invoices socket={socket} />}
-        </Content>
-        <Footer
-          style={{ textAlign: "center", background: "#eaeaea" }}
-          onClick={() =>
-            notificationHandler({
-              title: "PROCESSED",
-              content: "mess,dfsdfsage"
-            })
-          }
-        >
-          2019 NUS BT3101 CAPSTONE GROUP 2
-        </Footer>
-      </Layout>
-    </div>
-  );
+            2019 NUS BT3101 CAPSTONE GROUP 2
+          </Footer>
+        </Layout>
+      </div>
+    );
+  }
 }
 
 export default App;

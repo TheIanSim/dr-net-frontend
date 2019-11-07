@@ -1,7 +1,7 @@
 import React from "react";
 import PieChart from "../../Charts/PieChart";
 
-export default function Accuracy() {
+export default function Accuracy(props) {
   return (
     <div className="main-card">
       <div style={{ marginTop: "36px", textAlign: "center" }}>
@@ -15,7 +15,7 @@ export default function Accuracy() {
             color: "#02afbc"
           }}
         >
-          216
+          {props.invoicesData.length}
         </h1>
         <h4>Total Documents Processed</h4>
       </div>
