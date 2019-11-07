@@ -143,7 +143,7 @@ export default function Accuracy(props) {
           <h4>Figures in Percent</h4>
 
           <div className="chart-container-tall">
-            <BarChart data={data}/>
+            <BarChart data={data} />
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function Accuracy(props) {
         <div style={{ marginTop: "36px", textAlign: "center" }}>
           <h1>CLASSIFIER METRICS</h1>
         </div>
-        <MetricsTable data={data}/>
+        <MetricsTable data={data} />
       </div>
     </div>
   );

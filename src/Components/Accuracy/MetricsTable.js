@@ -1,87 +1,14 @@
 import React from "react";
-import { Table, Divider, Tag } from "antd";
+import { Table } from "antd";
 import { percRound } from "../../functions";
 
-const { Column, ColumnGroup } = Table;
-
-const data = [
-  {
-    category: "Others",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Invoice Date",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Invoice Currency",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Tax Amount",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Provider Name",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "PO Number",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Consumption Country",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Account Number",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Amount (inc. Tax)",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  },
-  {
-    category: "Consumption Period",
-    Precision: Math.random().toFixed(2),
-    Recall: Math.random().toFixed(2),
-    F1: Math.random().toFixed(2),
-    Support: (Math.random() * 100).toFixed(0)
-  }
-];
+const { Column } = Table;
 
 export default function MetricsTable(props) {
   const formatData = data => {
     const out = [];
     for (let key of Object.keys(data)) {
-      if (! new Set(["macro avg", "accuracy", "weighted avg"]).has(key)) {
+      if (!new Set(["macro avg", "accuracy", "weighted avg"]).has(key)) {
         out.push({
           category: key,
           F1: percRound(data[key]["f1-score"]),
