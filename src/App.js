@@ -4,6 +4,7 @@ import { Layout, Menu, notification, Icon } from "antd";
 import Dashboard from "./Components/Dashboard";
 import Accuracy from "./Components/Accuracy";
 import Invoices from "./Components/Invoices";
+import Trends from "./Components/Trends";
 
 import socketIOClient from "socket.io-client";
 
@@ -74,6 +75,7 @@ function App() {
           )}
           {page === "ACCURACY" && <Accuracy socket={socket} />}
           {page === "INVOICES" && <Invoices socket={socket} />}
+          {page === "TRENDS" && <Trends socket={socket} />}
         </Content>
         <Footer
           style={{ textAlign: "center", background: "#eaeaea" }}
