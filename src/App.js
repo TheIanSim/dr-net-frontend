@@ -3,6 +3,8 @@ import { Layout, Menu, notification, Icon } from "antd";
 import Dashboard from "./Components/Dashboard";
 import Accuracy from "./Components/Accuracy";
 import Invoices from "./Components/Invoices";
+import Trends from "./Components/Trends";
+import { formatAreaChartData } from "./functions";
 
 import io from "socket.io-client";
 
@@ -91,13 +93,20 @@ class App extends React.Component {
               </Menu.Item>
             </Menu>
           </Header>
-          <Content style={{ padding: "30px", background: "#eaeaea" }}>
+          <Content
+            style={{
+              padding: "30px",
+              background: "#eaeaea",
+              overflowY: "scroll"
+            }}
+          >
             {this.state.page === "HOME" && (
               <Dashboard
                 handlePageChange={this.handlePageChange}
                 socket={this.state.socket}
                 invoicesData={this.state.invoices}
                 accuracyData={this.state.accuracy}
+                processed={formatAreaChartData(this.state.invoices)}
               />
             )}
             {this.state.page === "ACCURACY" && (
@@ -112,11 +121,15 @@ class App extends React.Component {
                 invoicesData={this.state.invoices}
               />
             )}
+            {this.state.page === "TRENDS" && (
+              <Trends
+                processed={formatAreaChartData(this.state.invoices)}
+                socket={this.state.socket}
+                invoicesData={this.state.invoices}
+              />
+            )}
           </Content>
-          <Footer
-            style={{ textAlign: "center", background: "#eaeaea" }}
-            onClick={this.st}
-          >
+          <Footer style={{ textAlign: "center", background: "#eaeaea" }}>
             2019 NUS BT3101 CAPSTONE GROUP 2
           </Footer>
         </Layout>

@@ -18,7 +18,7 @@ export default function Dashboard(props) {
           data={props.accuracyData}
         />
         <Volume invoicesData={props.invoicesData} />
-        <Trends />
+        <Trends invoicesData={props.invoicesData} processed={props.processed} />
       </div>
       <Upload />
     </>

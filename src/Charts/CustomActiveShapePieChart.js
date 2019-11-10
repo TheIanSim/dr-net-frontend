@@ -1,5 +1,8 @@
 import React, { PureComponent } from "react";
-import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, Cell } from "recharts";
+import { numberWithCommas } from "../functions";
+
+const COLORS = ["#5366ac", "#02afbc", "#6f2282"];
 
 const renderActiveShape = props => {
   const RADIAN = Math.PI / 180;
@@ -14,6 +17,7 @@ const renderActiveShape = props => {
     fill,
     payload,
     percent,
+    name,
     value
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -60,7 +64,7 @@ const renderActiveShape = props => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`${value} Files`}</text>
+      >{`$${numberWithCommas(value)}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -68,7 +72,7 @@ const renderActiveShape = props => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`${(percent * 100).toFixed(2)}% of Total`}
+        {`(${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -85,37 +89,27 @@ export default class Example extends PureComponent {
     });
   };
 
-  getCatTotal = data => {
-    const cats = {};
-    data.forEach(inv => {
-      if (cats[inv.category]) {
-        cats[inv.category]++;
-      } else {
-        cats[inv.category] = 1;
-      }
-    });
-    return Object.keys(cats).map(cat => ({
-      name: cat,
-      value: cats[cat]
-    }));
-  };
-
   render() {
+    console.log(this.props.data);
     return (
-      <ResponsiveContainer>
-        <PieChart>
-          <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={this.getCatTotal(this.props.data)}
-            innerRadius={70}
-            outerRadius={100}
-            fill="#02afbc"
-            dataKey="value"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      <PieChart width={500} height={400}>
+        <Pie
+          activeIndex={this.state.activeIndex}
+          activeShape={renderActiveShape}
+          data={this.props.data}
+          cx={250}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+          onMouseEnter={this.onPieEnter}
+        >
+          {this.props.data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
     );
   }
 }

@@ -15,12 +15,21 @@ export default function Accuracy(props) {
             color: "#02afbc"
           }}
         >
-          {props.invoicesData.filter(invoice => invoice.status !== 'unprocessed').length}
+          {
+            props.invoicesData.filter(
+              invoice => invoice.status !== "unprocessed"
+            ).length
+          }
         </h1>
         <h4>Total Documents Processed</h4>
       </div>
       <div className="chart-container">
-        <PieChart />
+        <PieChart
+          data={props.invoicesData.filter(
+            invoice =>
+              invoice.status !== "unprocessed" && invoice.category
+          )}
+        />
       </div>
     </div>
   );

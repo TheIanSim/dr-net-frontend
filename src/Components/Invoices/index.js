@@ -9,26 +9,21 @@ const statusColours = {
   reviewed: "green"
 };
 
-const categories = [
-  "IT Infrastructure",
-  "Telecom Services",
-  "Operations",
-  "Human Resources"
-];
+const categories = ["Telco", "Consultants", "Services", "Hardware", "Others"];
 
 const dates = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  { text: "Jan", value: "-01" },
+  { text: "Feb", value: "-02" },
+  { text: "Mar", value: "-03" },
+  { text: "Apr", value: "-04" },
+  { text: "May", value: "-05" },
+  { text: "Jun", value: "-06" },
+  { text: "Jul", value: "-07" },
+  { text: "Aug", value: "-08" },
+  { text: "Sep", value: "-09" },
+  { text: "Oct", value: "-10" },
+  { text: "Nov", value: "-11" },
+  { text: "Dec", value: "-12" }
 ];
 
 class Invoices extends React.Component {
@@ -93,7 +88,7 @@ class Invoices extends React.Component {
       let num = 0;
       let den = 0;
       for (let key in row) {
-        if (key.indexOf("_conf") > -1 && row[key] !== 0) {
+        if (key.indexOf("_conf") > -1 && row[key] > 0) {
           den++;
           num += row[key];
         }
@@ -133,7 +128,7 @@ class Invoices extends React.Component {
         title: "Date",
         dataIndex: "date_of_invoice",
         key: "date_of_invoice",
-        filters: dates.map(date => ({ text: date, value: date })),
+        filters: dates,
         filteredValue: filteredInfo.date_of_invoice || null,
         onFilter: (value, record) => record.date_of_invoice.includes(value),
         sorter: (a, b) => a.date_of_invoice.length - b.date_of_invoice.length,

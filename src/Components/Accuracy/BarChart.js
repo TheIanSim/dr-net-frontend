@@ -15,7 +15,12 @@ export default function BarChartComp(props) {
   const formatData = data => {
     const out = [];
     for (let key of Object.keys(data)) {
-      out.push({ category: key, "f1-score": percRound(data[key]["f1-score"]) });
+      if (key !== "macro avg" && key !== "weighted avg" && key !== "accuracy") {
+        out.push({
+          category: key,
+          "f1-score": percRound(data[key]["f1-score"])
+        });
+      }
     }
     return out;
   };
