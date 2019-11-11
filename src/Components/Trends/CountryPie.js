@@ -24,7 +24,7 @@ export default function CountryPie(props) {
   return (
     <div className="card">
       <div style={{ marginTop: "36px", textAlign: "center" }}>
-        <h1>TOTAL EXPENSE ACROSS COUNTRIES</h1>
+        <h1>EXPENSE BY COUNTRIES</h1>
         <h1
           style={{
             fontSize: "4rem",
@@ -36,7 +36,7 @@ export default function CountryPie(props) {
         >
           ${numberWithCommas(calcTotal(outData))}
         </h1>
-        <h4>Total Expense Processed</h4>
+        <h4>Total Across all Countries</h4>
       </div>
       <div className="chart-container">
         <CustomActiveShapePieChart data={outData} />

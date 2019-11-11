@@ -17,8 +17,15 @@ export default function Dashboard(props) {
           handlePageChange={props.handlePageChange}
           data={props.accuracyData}
         />
-        <Volume invoicesData={props.invoicesData} />
-        <Trends invoicesData={props.invoicesData} processed={props.processed} />
+        <Volume
+          invoicesData={props.invoicesData}
+          handlePageChange={props.handlePageChange}
+        />
+        <Trends
+          invoicesData={props.invoicesData}
+          processed={props.processed}
+          handlePageChange={props.handlePageChange}
+        />
       </div>
       <Upload />
     </>

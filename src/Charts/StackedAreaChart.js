@@ -18,13 +18,16 @@ export default class Example extends PureComponent {
         margin={{
           top: 10,
           right: 10,
-          left: 20,
-          bottom: 20
+          left: 45,
+          bottom: 45
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis
+          dataKey="name"
+          label={{ value: "Date (YYYY-MM-DD)", position: "bottom" }}
+        />
+        <YAxis label={{ value: "Total Spending (SGD)", angle: -90, position: "left" }} />
         <Tooltip />
         <Area
           type="monotone"

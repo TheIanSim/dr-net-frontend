@@ -3,7 +3,10 @@ import PieChart from "../../Charts/PieChart";
 
 export default function Accuracy(props) {
   return (
-    <div className="main-card">
+    <div
+      className="main-card"
+      onClick={() => props.handlePageChange({ key: "INVOICES" })}
+    >
       <div style={{ marginTop: "36px", textAlign: "center" }}>
         <h1>INVOICES</h1>
         <h1
@@ -26,8 +29,7 @@ export default function Accuracy(props) {
       <div className="chart-container">
         <PieChart
           data={props.invoicesData.filter(
-            invoice =>
-              invoice.status !== "unprocessed" && invoice.category
+            invoice => invoice.status !== "unprocessed" && invoice.category
           )}
         />
       </div>

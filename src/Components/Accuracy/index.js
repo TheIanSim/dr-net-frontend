@@ -15,7 +15,7 @@ export default function Accuracy(props) {
         justifyContent: "space-between"
       }}
     >
-      <div className="main-card">
+      <div className="main-card-no-hover">
         <div style={{ marginTop: "36px", textAlign: "center" }}>
           <h1>AGGREGATE ACCURACY</h1>
           <h1
@@ -129,7 +129,7 @@ export default function Accuracy(props) {
           </div>
         </div>
       </div>
-      <div className="main-card">
+      <div className="main-card-no-hover">
         <div style={{ marginTop: "36px", textAlign: "center" }}>
           <h1>CATEGORY BREAKDOWN</h1>
           <h4>Figures in Percent</h4>
@@ -139,7 +139,7 @@ export default function Accuracy(props) {
           </div>
         </div>
       </div>
-      <div className="main-card">
+      <div className="main-card-no-hover">
         <div style={{ marginTop: "36px", textAlign: "center" }}>
           <h1>CLASSIFIER METRICS</h1>
         </div>

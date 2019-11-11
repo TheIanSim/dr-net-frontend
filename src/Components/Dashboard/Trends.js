@@ -21,7 +21,10 @@ export default function Accuracy(props) {
   };
 
   return (
-    <div className="main-card">
+    <div
+      className="main-card"
+      onClick={() => props.handlePageChange({ key: "TRENDS" })}
+    >
       <div style={{ marginTop: "36px", textAlign: "center" }}>
         <h1>TRENDS</h1>
         <h1
@@ -38,7 +41,7 @@ export default function Accuracy(props) {
         <h4>Year to Date Spending</h4>
       </div>
       <div className="chart-container">
-        <LineChart data={thisYearInvoices}/>
+        <LineChart data={thisYearInvoices} />
       </div>
     </div>
   );

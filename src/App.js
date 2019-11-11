@@ -111,12 +111,14 @@ class App extends React.Component {
             )}
             {this.state.page === "ACCURACY" && (
               <Accuracy
+                handlePageChange={this.handlePageChange}
                 socket={this.state.socket}
                 accuracyData={this.state.accuracy}
               />
             )}
             {this.state.page === "INVOICES" && (
               <Invoices
+                handlePageChange={this.handlePageChange}
                 socket={this.state.socket}
                 invoicesData={this.state.invoices}
               />

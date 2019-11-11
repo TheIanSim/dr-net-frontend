@@ -19,13 +19,15 @@ export default function MultipleLineChart(props) {
       margin={{
         top: 5,
         right: 10,
-        left: 10,
-        bottom: 5
+        left: 20,
+        bottom: 50
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis />
+      <YAxis
+        label={{ value: "Total Spending (SGD)", angle: -90, position: "left" }}
+      />
       <Tooltip />
       <Legend />
       {props.dataCategories.map(row => (
